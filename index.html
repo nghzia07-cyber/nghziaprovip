@@ -343,7 +343,7 @@
             </div>
 
             <!-- Video Container (Main Highlight) -->
-            <div class="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-ai-purple/20 border border-white/10 group mb-16">
+            <div class="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-ai-purple/20 border border-white/10 group mb-4">
                 <div class="absolute -inset-1 bg-gradient-to-r from-ai-accent to-ai-purple opacity-20 blur-lg group-hover:opacity-40 transition duration-500"></div>
                 <div class="relative aspect-video bg-black z-10">
                     <video 
@@ -353,7 +353,14 @@
                         muted 
                         loop
                         poster="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                        
+                        <!-- CÁCH SỬ DỤNG VIDEO CỦA BẠN: -->
+                        <!-- Khi tải web về máy, hãy xóa dòng <source> ở dưới và bỏ dấu comment (<!-- -->) ở dòng này: -->
+                        <!-- <source src="20251201-0744-30.6702545.mp4" type="video/mp4"> -->
+
+                        <!-- Hiện tại dùng video mẫu online để xem trước không bị lỗi: -->
                         <source src="https://videos.pexels.com/video-files/8538086/8538086-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                        
                         Trình duyệt của bạn không hỗ trợ thẻ video.
                     </video>
                 </div>
@@ -361,6 +368,14 @@
                     <h3 class="text-xl font-bold text-white">Video Sản Phẩm Chính</h3>
                     <p class="text-sm text-gray-400">Demo tổng quan về khả năng xử lý và ứng dụng AI.</p>
                 </div>
+            </div>
+            
+            <!-- Hướng dẫn sử dụng (Sẽ hiển thị để nhắc bạn) -->
+            <div class="flex items-center justify-center gap-2 mb-12 text-yellow-500 bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20 max-w-2xl mx-auto">
+                <i data-lucide="info" class="w-5 h-5"></i>
+                <p class="text-sm">
+                    <strong>Lưu ý:</strong> Để hiển thị video riêng của bạn (`20251201...mp4`), hãy tải file HTML này về và đặt file video vào <strong>cùng một thư mục</strong>.
+                </p>
             </div>
 
             <!-- Other Projects Grid -->
