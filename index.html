@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y Nghĩa Hlong - AI Developer Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: Orbitron (Tech) & Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Config Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Orbitron', 'sans-serif'],
+                    },
+                    colors: {
+                        ai: {
+                            base: '#0f172a', // Slate 900
+                            surface: '#1e293b', // Slate 800
+                            accent: '#06b6d4', // Cyan 500
+                            glow: '#22d3ee', // Cyan 400
+                            purple: '#8b5cf6' // Violet 500
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b; 
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4; 
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #22d3ee, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-ai-accent selection:text-white overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 bg-ai-base/80 backdrop-blur-md border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <a href="#" class="font-tech text-2xl font-bold tracking-wider text-white flex items-center gap-2">
+                    <i data-lucide="cpu" class="text-ai-accent"></i>
+                    <span>Nghĩa Cháy Pro<span class="text-ai-accent">.AI</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#home" class="text-gray-300 hover:text-ai-accent font-medium transition duration-300">Trang chủ</a>
+                    <a href="#about" class="text-gray-300 hover:text-ai-accent font-medium transition duration-300">Giới thiệu</a>
+                    <a href="#timeline" class="text-gray-300 hover:text-ai-accent font-medium transition duration-300">Hành trình</a>
+                    <a href="#skills" class="text-gray-300 hover:text-ai-accent font-medium transition duration-300">Kỹ năng</a>
+                    <a href="#projects" class="text-gray-300 hover:text-ai-accent font-medium transition duration-300">Dự án</a>
+                    <a href="#contact" class="px-5 py-2 rounded-full border border-ai-accent text-ai-accent hover:bg-ai-accent hover:text-white transition duration-300 font-medium">
+                        Liên hệ
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-ai-surface border-t border-white/10 absolute w-full shadow-2xl">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-white/5">Trang chủ</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-white/5">Giới thiệu</a>
+                <a href="#timeline" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-white/5">Hành trình</a>
+                <a href="#skills" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-white/5">Kỹ năng</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-gray-300 hover:text-white hover:bg-white/5">Dự án</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-ai-accent font-bold">Liên hệ ngay</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <!-- Thêm scroll-mt-24 để tránh bị menu che khi click link -->
+    <section id="home" class="scroll-mt-24 relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center min-h-screen">
+        <!-- Background Effects -->
+        <div class="absolute top-20 right-0 w-96 h-96 bg-ai-accent/20 rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-ai-purple/20 rounded-full blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-20">
+                <!-- Text Content -->
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-sm font-medium text-gray-300">Sẵn sàng cho dự án mới</span>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold font-tech mb-6 leading-tight">
+                        Xin chào, tôi là <br/>
+                        <span class="text-gradient">Y Nghĩa Hlong</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0">
+                        Sinh viên chuyên ngành <span class="text-ai-accent font-semibold">Lập trình ứng dụng Trí tuệ nhân tạo (AI)</span>. Đam mê xây dựng các giải pháp thông minh và học máy để giải quyết vấn đề thực tế.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="#contact" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-8 py-4 rounded-lg font-bold transition duration-300 shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Liên hệ tôi
+                        </a>
+                        <a href="#about" class="bg-white/5 hover:bg-white/10 border border-white/10 text-white px-8 py-4 rounded-lg font-bold transition duration-300 flex items-center justify-center gap-2">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            Hồ sơ năng lực
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image / Avatar -->
+                <div class="lg:w-1/2 flex justify-center lg:justify-end">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96 animate-float">
+                        <!-- Tech Ring Animation -->
+                        <div class="absolute inset-0 border-2 border-dashed border-ai-accent/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                        <div class="absolute inset-4 border-2 border-dashed border-ai-purple/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                        
+                        <!-- Avatar Image -->
+                        <div class="absolute inset-6 rounded-full overflow-hidden border-4 border-ai-surface bg-ai-surface shadow-2xl shadow-ai-accent/20">
+                            <!-- Placeholder image for tech guy -->
+                            <img src="https://i.postimg.cc/HxWJRQ7j/z7205122149458-abe8cc7e2ea0928a5d534708aa344221.jpg" alt="Y Nghĩa Hlong" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <!-- Floating Card -->
+                        <div class="absolute -bottom-4 -left-4 bg-ai-surface/90 backdrop-blur border border-white/10 p-4 rounded-xl shadow-xl">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-ai-accent/20 p-2 rounded-lg text-ai-accent">
+                                    <i data-lucide="code-2" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-400">Chuyên ngành</p>
+                                    <p class="font-bold text-white">Lập trình AI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <!-- Thêm scroll-mt-24 -->
+    <section id="about" class="scroll-mt-24 py-20 bg-ai-surface/50 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="relative rounded-2xl overflow-hidden border border-white/10 group">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Coding Setup" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ai-base to-transparent"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <p class="font-tech text-ai-accent text-lg">Mã sinh viên</p>
+                        <p class="text-3xl font-bold text-white">Pk04547</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-ai-accent font-bold tracking-wider uppercase mb-2">Về bản thân</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 font-tech">Đam mê công nghệ & Sự sáng tạo</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Tôi là <strong class="text-white">Y Nghĩa Hlong</strong>, hiện đang là sinh viên chuyên ngành <strong class="text-white">Lập trình ứng dụng trí tuệ nhân tạo (AI)</strong>. 
+                        Với niềm đam mê mãnh liệt với dữ liệu và thuật toán, tôi luôn tìm tòi và học hỏi các công nghệ mới nhất để áp dụng vào thực tiễn.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="border-l-4 border-ai-accent pl-4">
+                            <h4 class="font-bold text-white text-lg">Họ và tên</h4>
+                            <p class="text-gray-400">Y Nghĩa Hlong</p>
+                        </div>
+                        <div class="border-l-4 border-ai-purple pl-4">
+                            <h4 class="font-bold text-white text-lg">Mã Sinh Viên</h4>
+                            <p class="text-gray-400">Pk04547</p>
+                        </div>
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-bold text-white text-lg">Chuyên ngành</h4>
+                            <p class="text-gray-400">Lập trình AI</p>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-bold text-white text-lg">Trạng thái</h4>
+                            <p class="text-gray-400">Đang học tập</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: TIMELINE / EDUCATION -->
+    <!-- Thêm scroll-mt-24 -->
+    <section id="timeline" class="scroll-mt-24 py-20 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 font-tech">Hành Trình Học Tập</h2>
+                <div class="w-20 h-1 bg-ai-purple mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative border-l border-white/20 ml-3 md:ml-6 space-y-12">
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-1.5 top-2 w-3 h-3 rounded-full bg-ai-accent ring-4 ring-ai-surface"></span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-white">Sinh viên Chuyên ngành AI</h3>
+                        <span class="text-sm text-ai-accent bg-ai-accent/10 px-3 py-1 rounded-full mt-2 sm:mt-0">2023 - Hiện tại</span>
+                    </div>
+                    <p class="text-gray-400 mb-2 font-medium">FPT Polytechnic</p>
+                    <p class="text-gray-500 text-sm">Tập trung nghiên cứu sâu về Machine Learning, Deep Learning và Xử lý ngôn ngữ tự nhiên (NLP). Tham gia các dự án thực tế về nhận diện khuôn mặt và chatbot.</p>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-1.5 top-2 w-3 h-3 rounded-full bg-ai-purple ring-4 ring-ai-surface"></span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-white">Thành viên CLB Lập Trình</h3>
+                        <span class="text-sm text-ai-purple bg-ai-purple/10 px-3 py-1 rounded-full mt-2 sm:mt-0">2024</span>
+                    </div>
+                    <p class="text-gray-400 mb-2 font-medium">CLB Code & Algorithm</p>
+                    <p class="text-gray-500 text-sm">Tham gia chia sẻ kiến thức, mentoring cho các bạn khóa dưới và tổ chức các cuộc thi coding nội bộ.</p>
+                </div>
+
+                 <!-- Timeline Item 3 -->
+                 <div class="relative pl-8 md:pl-12">
+                    <span class="absolute -left-1.5 top-2 w-3 h-3 rounded-full bg-gray-500 ring-4 ring-ai-surface"></span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-white">Bắt đầu Học Lập Trình</h3>
+                        <span class="text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded-full mt-2 sm:mt-0">2022</span>
+                    </div>
+                    <p class="text-gray-400 mb-2 font-medium">Tự học & Khóa học Online</p>
+                    <p class="text-gray-500 text-sm">Tiếp cận với Python và C++. Xây dựng những ứng dụng console đầu tiên và nuôi dưỡng niềm đam mê công nghệ.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <!-- Thêm scroll-mt-24 -->
+    <section id="skills" class="scroll-mt-24 py-20 bg-ai-surface/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 font-tech">Kỹ Năng & Công Nghệ</h2>
+                <div class="w-20 h-1 bg-ai-accent mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Skill Card 1 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-ai-accent/50 transition duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500 group-hover:text-white transition">
+                        <i data-lucide="code-2" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Lập trình cơ bản</h3>
+                    <p class="text-gray-400 text-sm mb-4">Nền tảng vững chắc về tư duy thuật toán và cấu trúc dữ liệu.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">Python</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">C++</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">Java</span>
+                    </div>
+                </div>
+
+                <!-- Skill Card 2 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-ai-accent/50 transition duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-ai-accent/20 text-ai-accent rounded-xl flex items-center justify-center mb-6 group-hover:bg-ai-accent group-hover:text-white transition">
+                        <i data-lucide="brain-circuit" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">AI & Machine Learning</h3>
+                    <p class="text-gray-400 text-sm mb-4">Nghiên cứu và ứng dụng các mô hình học máy vào thực tế.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">TensorFlow</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">PyTorch</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">OpenCV</span>
+                    </div>
+                </div>
+
+                <!-- Skill Card 3 -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-ai-accent/50 transition duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500 group-hover:text-white transition">
+                        <i data-lucide="globe" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
+                    <p class="text-gray-400 text-sm mb-4">Xây dựng giao diện người dùng hiện đại và Responsive.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">HTML/CSS</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">JavaScript</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-300">ReactJS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION (EXPANDED) -->
+    <!-- Thêm scroll-mt-24 -->
+    <section id="projects" class="scroll-mt-24 py-20 bg-black/50 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 font-tech">Dự Án Tiêu Biểu</h2>
+                <div class="w-20 h-1 bg-ai-purple mx-auto rounded-full"></div>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Video sản phẩm và các dự án cá nhân tôi đã thực hiện.</p>
+            </div>
+
+            <!-- Video Container (Main Highlight) -->
+            <div class="relative w-full max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-ai-purple/20 border border-white/10 group mb-16">
+                <div class="absolute -inset-1 bg-gradient-to-r from-ai-accent to-ai-purple opacity-20 blur-lg group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative aspect-video bg-black z-10">
+                    <video 
+                        class="w-full h-full object-cover" 
+                        controls 
+                        autoplay 
+                        muted 
+                        loop
+                        poster="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                        <source src="https://videos.pexels.com/video-files/8538086/8538086-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                        Trình duyệt của bạn không hỗ trợ thẻ video.
+                    </video>
+                </div>
+                <div class="p-4 bg-ai-surface/90 border-t border-white/10">
+                    <h3 class="text-xl font-bold text-white">Video Sản Phẩm Chính</h3>
+                    <p class="text-sm text-gray-400">Demo tổng quan về khả năng xử lý và ứng dụng AI.</p>
+                </div>
+            </div>
+
+            <!-- Other Projects Grid -->
+            <h3 class="text-2xl font-bold text-white mb-8 font-tech border-l-4 border-ai-accent pl-4">Các dự án khác</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project Card 1 -->
+                <div class="bg-ai-surface rounded-xl overflow-hidden border border-white/10 hover:border-ai-accent transition duration-300 group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1617791160505-6f00504e3519?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-xs font-bold px-2 py-1 rounded text-white">Python</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Face Recognition</h4>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Hệ thống điểm danh tự động sử dụng OpenCV và Deep Learning để nhận diện khuôn mặt sinh viên.</p>
+                        <a href="#" class="text-ai-accent text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all">Xem chi tiết <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="bg-ai-surface rounded-xl overflow-hidden border border-white/10 hover:border-ai-accent transition duration-300 group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-xs font-bold px-2 py-1 rounded text-white">NLP</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Chatbot Tư Vấn</h4>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Chatbot hỗ trợ tư vấn tuyển sinh tự động, tích hợp mô hình Transformer để hiểu ngôn ngữ tự nhiên.</p>
+                        <a href="#" class="text-ai-accent text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all">Xem chi tiết <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="bg-ai-surface rounded-xl overflow-hidden border border-white/10 hover:border-ai-accent transition duration-300 group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-xs font-bold px-2 py-1 rounded text-white">Data</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Dự Báo Giá Nhà</h4>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-2">Phân tích dữ liệu bất động sản và sử dụng hồi quy tuyến tính để dự báo giá nhà trong tương lai.</p>
+                        <a href="#" class="text-ai-accent text-sm font-semibold flex items-center gap-1 hover:gap-2 transition-all">Xem chi tiết <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: CERTIFICATIONS / ACHIEVEMENTS -->
+    <section class="py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 font-tech">Chứng Chỉ & Thành Tựu</h2>
+                <div class="w-20 h-1 bg-ai-accent mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6">
+                <!-- Cert 1 -->
+                <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-xl hover:bg-white/10 transition">
+                    <div class="bg-yellow-500/20 p-3 rounded-full text-yellow-500"><i data-lucide="award" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-white">Machine Learning Specialization</h4>
+                        <p class="text-xs text-gray-400">Coursera - Stanford</p>
+                    </div>
+                </div>
+                <!-- Cert 2 -->
+                <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-xl hover:bg-white/10 transition">
+                    <div class="bg-blue-500/20 p-3 rounded-full text-blue-500"><i data-lucide="award" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-white">Python for Data Science</h4>
+                        <p class="text-xs text-gray-400">IBM Developer Skills</p>
+                    </div>
+                </div>
+                <!-- Cert 3 -->
+                <div class="flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-xl hover:bg-white/10 transition">
+                    <div class="bg-green-500/20 p-3 rounded-full text-green-500"><i data-lucide="trophy" class="w-6 h-6"></i></div>
+                    <div>
+                        <h4 class="font-bold text-white">Top 10 Hackathon AI 2024</h4>
+                        <p class="text-xs text-gray-400">FPT Polytechnic</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <!-- Thêm scroll-mt-24 -->
+    <section id="contact" class="scroll-mt-24 py-20 bg-ai-surface/30 border-t border-white/5">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                <!-- Background decor -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-ai-accent/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold font-tech text-white mb-4">Kết nối với tôi</h2>
+                    <p class="text-gray-400">Luôn sẵn sàng trao đổi về công nghệ, AI và các cơ hội hợp tác.</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-10">
+                    <a href="#" class="flex items-center gap-3 text-gray-300 hover:text-ai-accent transition group">
+                        <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-ai-accent group-hover:text-white transition">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-medium">hlongynpk04547@gmail.com</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-3 text-gray-300 hover:text-ai-accent transition group">
+                        <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-ai-accent group-hover:text-white transition">
+                            <i data-lucide="phone" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-medium">0388977874</span>
+                    </a>
+                </div>
+
+                <form onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Tôi sẽ phản hồi sớm.');" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Tên của bạn" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-ai-accent focus:ring-1 focus:ring-ai-accent outline-none transition">
+                        <input type="email" placeholder="Email liên hệ" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-ai-accent focus:ring-1 focus:ring-ai-accent outline-none transition">
+                    </div>
+                    <textarea rows="4" placeholder="Nội dung tin nhắn..." class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-ai-accent focus:ring-1 focus:ring-ai-accent outline-none transition"></textarea>
+                    <button class="w-full bg-ai-accent hover:bg-cyan-600 text-white font-bold py-3 rounded-lg transition duration-300 shadow-lg shadow-cyan-500/20">
+                        Gửi tin nhắn
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black py-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">
+                &copy; 2025 <span class="text-ai-accent font-bold">Nghĩa Cháy Provip AI</span>. All rights reserved.
+            </p>
+            <div class="flex justify-center gap-6 mt-4">
+                <a href="#" class="text-gray-600 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="text-gray-600 hover:text-white transition"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="#" class="text-gray-600 hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
