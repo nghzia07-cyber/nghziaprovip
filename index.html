@@ -96,22 +96,14 @@
             width: 100%;
         }
 
-        /* Timeline */
-        .timeline-item {
-            position: relative;
-            padding-left: 2rem;
-            padding-bottom: 1.5rem;
-            border-left: 2px solid #1e293b;
-        }
+        /* Timeline & Payment Radio */
+        .timeline-item { position: relative; padding-left: 2rem; padding-bottom: 1.5rem; border-left: 2px solid #1e293b; }
         .timeline-item:last-child { border-left: 2px solid transparent; }
-        .timeline-item::before {
-            content: ''; position: absolute; left: -0.35rem; top: 0;
-            width: 0.7rem; height: 0.7rem; border-radius: 50%; background-color: #475569;
-        }
-        .timeline-item.active::before {
-            background-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56,189,248,0.2);
-        }
+        .timeline-item::before { content: ''; position: absolute; left: -0.35rem; top: 0; width: 0.7rem; height: 0.7rem; border-radius: 50%; background-color: #475569; }
+        .timeline-item.active::before { background-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
         .timeline-item.active { border-left-color: #38bdf8; }
+        .payment-radio:checked + div { border-color: #38bdf8; background-color: rgba(56, 189, 248, 0.1); }
+        .payment-radio:checked + div .radio-circle { background-color: #38bdf8; }
     </style>
     
     <script>
@@ -122,9 +114,9 @@
                     colors: {
                         dark: '#020617',
                         surface: '#0f172a',
-                        primary: '#38bdf8', // Sky 400
-                        secondary: '#818cf8', // Indigo 400
-                        accent: '#c084fc', // Purple 400
+                        primary: '#38bdf8',
+                        secondary: '#818cf8',
+                        accent: '#c084fc',
                     },
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
@@ -227,7 +219,7 @@
             <div class="relative min-h-[600px] flex items-center overflow-hidden">
                 <!-- Hero BG -->
                 <div class="absolute inset-0 z-0">
-                    <img src="https://i.postimg.cc/9z5DNrvV/image4-1759819889-205-width2048height1365.jpg" class="w-full h-full object-cover opacity-40 blur-sm scale-105">
+                    <img src="https://i.postimg.cc/9z5DNrvV/image4-1759819889-205-width2048height1365.jpg" class="w-full h-full object-cover opacity-60">
                     <div class="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/80 to-transparent"></div>
                 </div>
                 
@@ -254,6 +246,9 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="relative hidden md:block">
+                            <img src="https://i.postimg.cc/Bbw85mC1/iphone-17-pro-max-5.webp" class="w-full max-w-lg mx-auto drop-shadow-[0_20px_50px_rgba(56,189,248,0.3)] animate-[float_6s_ease-in-out_infinite] transform hover:scale-105 transition duration-500 rounded-[2.5rem] border-4 border-white/10">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -276,7 +271,7 @@
             
             <!-- Membership Banner -->
             <div class="max-w-[1600px] mx-auto px-4 py-20">
-                <div class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] rounded-[2rem] p-8 md:p-12 relative overflow-hidden border border-white/5 shadow-2xl">
+                <div class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden border border-white/5 shadow-2xl">
                     <div class="relative z-10 text-center">
                         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Đặc Quyền Thành Viên Của <span class="text-primary">Thế Giới Di Động</span></h2>
                         <p class="text-indigo-200 mb-8 max-w-2xl mx-auto text-lg">Tích điểm đổi quà, giảm giá sinh nhật, ưu đãi đặc biệt chỉ dành riêng cho thành viên.</p>
@@ -305,15 +300,11 @@
                 <p class="text-gray-400">Khám phá bộ sưu tập công nghệ đỉnh cao</p>
             </div>
 
-            <!-- Category Title & Filters -->
             <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
                 <h3 class="text-xl font-bold text-white" id="categoryTitle">Tất cả sản phẩm</h3>
-                <div class="flex flex-wrap gap-2" id="brandFilters">
-                     <!-- Brand buttons injected here -->
-                </div>
+                <div class="flex flex-wrap gap-2" id="brandFilters"></div>
             </div>
             
-            <!-- Price Filters -->
             <div class="flex flex-wrap gap-2 mb-8 justify-center md:justify-end">
                 <button onclick="filterByPrice('all')" class="px-4 py-1.5 rounded-full bg-white/10 text-white text-xs font-medium hover:bg-primary hover:text-white transition border border-white/5">Mọi mức giá</button>
                 <button onclick="filterByPrice('under-5')" class="px-4 py-1.5 rounded-full bg-transparent text-gray-400 text-xs border border-white/10 hover:border-primary hover:text-primary transition">Dưới 5 Triệu</button>
@@ -322,17 +313,10 @@
             </div>
 
             <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6"></div>
-            
-            <div id="noResults" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-magnifying-glass text-3xl text-gray-500"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white">Không tìm thấy sản phẩm</h3>
-                <button onclick="navToCategory('all')" class="mt-4 text-primary hover:underline">Xem tất cả</button>
-            </div>
+            <div id="noResults" class="hidden text-center py-20"><h3 class="text-xl font-bold text-white">Không tìm thấy sản phẩm</h3><button onclick="navToCategory('all')" class="mt-4 text-primary hover:underline">Xem tất cả</button></div>
         </div>
 
-        <!-- Tracking View -->
+        <!-- Other Views -->
         <div id="view-tracking" class="hidden max-w-3xl mx-auto px-4 py-20 text-center animate-fade-up">
             <h2 class="text-3xl font-bold text-white mb-6">Tra Cứu Đơn Hàng</h2>
             <div class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-md">
@@ -341,285 +325,140 @@
                      <input type="text" id="trackingEmail" placeholder="Email / Số điện thoại đặt hàng" class="w-full bg-black/30 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-primary transition">
                      <button onclick="checkOrder()" class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-secondary transition shadow-lg shadow-primary/20">Kiểm Tra Ngay</button>
                  </div>
-                 
                  <div id="trackingResult" class="hidden mt-8 text-left border-t border-white/10 pt-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <div>
-                            <h4 class="font-bold text-white text-lg">Đơn hàng #DH123456</h4>
-                            <p class="text-gray-400 text-sm">Ngày đặt: 04/12/2025</p>
-                        </div>
-                        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold">Đang giao hàng</span>
-                    </div>
+                    <div class="flex justify-between items-center mb-6"><div><h4 class="font-bold text-white text-lg">Đơn hàng #DH123456</h4><p class="text-gray-400 text-sm">Ngày đặt: 04/12/2025</p></div><span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-xs font-bold">Đang giao hàng</span></div>
                     <div class="space-y-6 pl-2">
-                        <div class="timeline-item active">
-                            <p class="text-sm font-bold text-white">Đơn hàng đang trên đường giao đến bạn</p>
-                            <p class="text-xs text-gray-500">Hôm nay - 08:30</p>
-                        </div>
-                        <div class="timeline-item active">
-                            <p class="text-sm font-bold text-white">Đã bàn giao cho đơn vị vận chuyển</p>
-                            <p class="text-xs text-gray-500">Hôm qua - 14:20</p>
-                        </div>
-                        <div class="timeline-item active">
-                            <p class="text-sm font-bold text-white">Đơn hàng đã được xác nhận</p>
-                            <p class="text-xs text-gray-500">Hôm qua - 10:15</p>
-                        </div>
+                        <div class="timeline-item active"><p class="text-sm font-bold text-white">Đơn hàng đang trên đường giao đến bạn</p><p class="text-xs text-gray-500">Hôm nay - 08:30</p></div>
+                        <div class="timeline-item active"><p class="text-sm font-bold text-white">Đã bàn giao cho đơn vị vận chuyển</p><p class="text-xs text-gray-500">Hôm qua - 14:20</p></div>
                     </div>
                  </div>
             </div>
         </div>
 
-        <!-- Contact View -->
         <div id="view-contact" class="hidden max-w-3xl mx-auto px-4 py-20 text-center animate-fade-up">
              <h2 class="text-3xl font-bold text-white mb-8">Liên Hệ Hỗ Trợ</h2>
              <div class="bg-white/5 p-10 rounded-3xl border border-white/10 backdrop-blur-md">
                  <div class="grid md:grid-cols-2 gap-8">
-                     <div class="text-center p-6 bg-white/5 rounded-2xl">
-                         <i class="fa-solid fa-phone text-3xl text-green-400 mb-4"></i>
-                         <h3 class="text-xl font-bold text-white mb-2">Hotline</h3>
-                         <p class="text-gray-300 text-lg">0388 977 874</p>
-                     </div>
-                     <div class="text-center p-6 bg-white/5 rounded-2xl">
-                         <i class="fa-solid fa-envelope text-3xl text-blue-400 mb-4"></i>
-                         <h3 class="text-xl font-bold text-white mb-2">Email</h3>
-                         <a href="mailto:nghianoob9@gmail.com" class="text-gray-300 text-lg hover:text-primary">nghianoob9@gmail.com</a>
-                     </div>
+                     <div class="text-center p-6 bg-white/5 rounded-2xl"><i class="fa-solid fa-phone text-3xl text-green-400 mb-4"></i><h3 class="text-xl font-bold text-white mb-2">Hotline</h3><p class="text-gray-300 text-lg">0388 977 874</p></div>
+                     <div class="text-center p-6 bg-white/5 rounded-2xl"><i class="fa-solid fa-envelope text-3xl text-blue-400 mb-4"></i><h3 class="text-xl font-bold text-white mb-2">Email</h3><a href="mailto:nghianoob9@gmail.com" class="text-gray-300 text-lg hover:text-primary">nghianoob9@gmail.com</a></div>
                  </div>
-                 <div class="mt-8 p-6 bg-white/5 rounded-2xl">
-                     <i class="fa-solid fa-location-dot text-3xl text-red-400 mb-4"></i>
-                     <h3 class="text-xl font-bold text-white mb-2">Địa Chỉ</h3>
-                     <p class="text-gray-300">Phường Tân An, TP. Buôn Ma Thuột</p>
-                 </div>
+                 <div class="mt-8 p-6 bg-white/5 rounded-2xl"><i class="fa-solid fa-location-dot text-3xl text-red-400 mb-4"></i><h3 class="text-xl font-bold text-white mb-2">Địa Chỉ</h3><p class="text-gray-300">Phường Tân An, TP. Buôn Ma Thuột</p></div>
              </div>
         </div>
         
-        <!-- Warranty View -->
         <div id="view-warranty" class="hidden max-w-4xl mx-auto px-4 py-20 animate-fade-up">
              <h2 class="text-3xl font-bold text-white mb-8 text-center">Trung Tâm Bảo Hành</h2>
              <div class="grid md:grid-cols-2 gap-8">
-                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                     <h3 class="text-xl font-bold text-primary mb-4">Chính Sách</h3>
-                     <ul class="space-y-3 text-gray-300 text-sm">
-                         <li class="flex gap-3"><i class="fa-solid fa-check text-green-400"></i> Bảo hành chính hãng 12 tháng</li>
-                         <li class="flex gap-3"><i class="fa-solid fa-check text-green-400"></i> 1 đổi 1 trong 30 ngày đầu nếu lỗi</li>
-                         <li class="flex gap-3"><i class="fa-solid fa-check text-green-400"></i> Hỗ trợ phần mềm trọn đời máy</li>
-                     </ul>
-                 </div>
-                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                     <h3 class="text-xl font-bold text-primary mb-4">Địa Điểm Tiếp Nhận</h3>
-                     <p class="text-gray-300 text-sm mb-2"><strong>Trụ sở chính:</strong> P. Tân An, TP. Buôn Ma Thuột</p>
-                     <p class="text-gray-300 text-sm"><strong>Hotline:</strong> 0388 977 874</p>
-                 </div>
+                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10"><h3 class="text-xl font-bold text-primary mb-4">Chính Sách</h3><ul class="space-y-3 text-gray-300 text-sm"><li class="flex gap-3"><i class="fa-solid fa-check text-green-400"></i> Bảo hành chính hãng 12 tháng</li><li class="flex gap-3"><i class="fa-solid fa-check text-green-400"></i> 1 đổi 1 trong 30 ngày đầu nếu lỗi</li></ul></div>
+                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10"><h3 class="text-xl font-bold text-primary mb-4">Địa Điểm</h3><p class="text-gray-300 text-sm mb-2"><strong>Trụ sở chính:</strong> P. Tân An, TP. Buôn Ma Thuột</p><p class="text-gray-300 text-sm"><strong>Hotline:</strong> 0388 977 874</p></div>
              </div>
         </div>
 
     </main>
 
-    <!-- AUTH MODAL (UPDATED: Combined & Tabbed) -->
+    <!-- Modals -->
     <div id="authModal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleAuthModal()"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
             <div class="bg-[#0f172a] rounded-3xl shadow-2xl border border-white/10 overflow-hidden relative animate-fade-up">
                 <button class="absolute top-4 right-4 text-gray-400 hover:text-white transition" onclick="toggleAuthModal()"><i class="fa-solid fa-xmark text-xl"></i></button>
-                
                 <div class="p-8">
-                    <!-- TABS -->
                     <div class="flex justify-center mb-6 bg-white/5 p-1 rounded-xl">
                         <button onclick="switchAuthTab('login')" id="tab-login" class="flex-1 py-2 rounded-lg text-sm font-bold transition bg-white text-gray-900 shadow-md">Đăng Nhập</button>
                         <button onclick="switchAuthTab('register')" id="tab-register" class="flex-1 py-2 rounded-lg text-sm font-bold transition text-gray-400 hover:text-white">Đăng Ký</button>
                     </div>
-
-                    <!-- LOGIN FORM -->
                     <div id="form-login">
-                        <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-white mb-1">Chào Mừng Trở Lại</h3>
-                            <p class="text-gray-400 text-xs">Đăng nhập để tiếp tục</p>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <button onclick="handleSocialLogin('Google')" class="flex items-center justify-center gap-2 py-2.5 bg-white text-gray-900 rounded-xl font-semibold hover:bg-gray-100 transition text-xs">
-                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4"> Google
-                            </button>
-                            <button onclick="handleSocialLogin('Facebook')" class="flex items-center justify-center gap-2 py-2.5 bg-[#1877F2] text-white rounded-xl font-semibold hover:bg-[#166fe5] transition text-xs">
-                                <i class="fa-brands fa-facebook text-base"></i> Facebook
-                            </button>
-                        </div>
-
-                        <div class="relative flex items-center justify-center mb-6">
-                            <div class="h-px bg-white/10 w-full absolute"></div>
-                            <span class="bg-[#0f172a] px-3 text-xs text-gray-500 relative">HOẶC</span>
-                        </div>
-
-                        <form class="space-y-4" onsubmit="handleLogin(event)">
-                            <div class="space-y-1">
-                                <label class="text-xs font-medium text-gray-400 ml-1">Email</label>
-                                <input type="text" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition text-sm" placeholder="name@example.com" required>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-xs font-medium text-gray-400 ml-1">Mật khẩu</label>
-                                <input type="password" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition text-sm" placeholder="••••••••" required>
-                            </div>
-                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition transform hover:-translate-y-0.5 text-sm">
-                                Đăng Nhập
-                            </button>
-                        </form>
-                        
-                        <p class="text-center mt-6 text-xs text-gray-400">
-                            Chưa có tài khoản? <a href="#" onclick="switchAuthTab('register')" class="text-primary hover:underline font-medium">Đăng ký ngay</a>
-                        </p>
+                        <div class="text-center mb-6"><h3 class="text-2xl font-bold text-white mb-1">Chào Mừng Trở Lại</h3></div>
+                        <div class="grid grid-cols-2 gap-4 mb-6"><button onclick="handleSocialLogin('Google')" class="flex items-center justify-center gap-2 py-2.5 bg-white text-gray-900 rounded-xl font-semibold hover:bg-gray-100 transition text-xs"><img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-4 h-4"> Google</button><button onclick="handleSocialLogin('Facebook')" class="flex items-center justify-center gap-2 py-2.5 bg-[#1877F2] text-white rounded-xl font-semibold hover:bg-[#166fe5] transition text-xs"><i class="fa-brands fa-facebook text-base"></i> Facebook</button></div>
+                        <form class="space-y-4" onsubmit="handleLogin(event)"><input type="email" placeholder="Email" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none" required><input type="password" placeholder="Mật khẩu" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none" required><button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition transform hover:-translate-y-0.5 text-sm">Đăng Nhập</button></form>
                     </div>
-
-                    <!-- REGISTER FORM -->
                     <div id="form-register" class="hidden">
-                         <div class="text-center mb-6">
-                            <h3 class="text-2xl font-bold text-white mb-1">Tạo Tài Khoản</h3>
-                            <p class="text-gray-400 text-xs">Tham gia cùng chúng tôi ngay</p>
-                        </div>
-                        <form class="space-y-4" onsubmit="handleRegister(event)">
-                            <input type="text" id="regName" placeholder="Họ và tên" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary outline-none text-sm" required>
-                            <input type="email" placeholder="Email" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary outline-none text-sm" required>
-                            <input type="password" placeholder="Mật khẩu" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-primary outline-none text-sm" required>
-                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition text-sm">
-                                Đăng Ký
-                            </button>
-                        </form>
-                         <p class="text-center mt-6 text-xs text-gray-400">
-                            Đã có tài khoản? <a href="#" onclick="switchAuthTab('login')" class="text-primary hover:underline font-medium">Đăng nhập</a>
-                        </p>
+                         <div class="text-center mb-6"><h3 class="text-2xl font-bold text-white mb-1">Tạo Tài Khoản</h3></div>
+                        <form class="space-y-4" onsubmit="handleRegister(event)"><input type="text" id="regName" placeholder="Họ và tên" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none text-sm" required><input type="email" placeholder="Email" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none text-sm" required><input type="password" placeholder="Mật khẩu" class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none text-sm" required><button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition text-sm">Đăng Ký</button></form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Video Modal -->
+    <div id="checkoutModal" class="fixed inset-0 z-[105] hidden">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeCheckout()"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg">
+            <div class="bg-[#0f172a] rounded-3xl shadow-2xl border border-white/10 overflow-hidden animate-fade-up relative h-[90vh] md:h-auto flex flex-col">
+                <div class="p-6 border-b border-white/10 flex justify-between items-center sticky top-0 bg-[#0f172a] z-10">
+                    <h3 class="text-2xl font-bold text-white">Thanh Toán</h3>
+                    <button class="text-gray-400 hover:text-white transition" onclick="closeCheckout()"><i class="fa-solid fa-xmark text-xl"></i></button>
+                </div>
+                <div class="p-6 overflow-y-auto flex-1">
+                    <form id="checkoutForm" onsubmit="processCheckout(event)" class="space-y-6">
+                        <div class="space-y-4"><h4 class="text-primary font-bold text-sm uppercase">1. Thông tin giao hàng</h4><div class="grid grid-cols-2 gap-4"><input type="text" placeholder="Họ tên" class="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none col-span-2" required><input type="tel" placeholder="Số điện thoại" class="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none" required><input type="email" placeholder="Email" class="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none"><input type="text" placeholder="Địa chỉ nhận hàng" class="bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white outline-none col-span-2" required></div></div>
+                        <div class="space-y-4"><h4 class="text-primary font-bold text-sm uppercase">2. Phương thức thanh toán</h4><label class="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition"><input type="radio" name="payment" value="cod" class="payment-radio hidden" checked><div class="w-5 h-5 rounded-full border-2 border-gray-500 flex items-center justify-center"><div class="w-2.5 h-2.5 bg-primary rounded-full hidden radio-circle"></div></div><div class="flex-1"><span class="block text-white font-medium">Thanh toán khi nhận hàng (COD)</span></div><i class="fa-solid fa-money-bill-wave text-green-400 text-xl"></i></label><label class="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition"><input type="radio" name="payment" value="bank" class="payment-radio hidden"><div class="w-5 h-5 rounded-full border-2 border-gray-500 flex items-center justify-center"><div class="w-2.5 h-2.5 bg-primary rounded-full hidden radio-circle"></div></div><div class="flex-1"><span class="block text-white font-medium">Chuyển khoản ngân hàng</span></div><i class="fa-solid fa-qrcode text-blue-400 text-xl"></i></label></div>
+                         <div class="border-t border-white/10 pt-4"><div class="flex justify-between text-xl font-bold text-white"><span>Tổng thanh toán:</span><span id="checkoutTotal" class="text-primary">0đ</span></div></div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition transform hover:-translate-y-0.5">Xác Nhận Đặt Hàng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="videoModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center px-4">
-        <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeVideo()"></div>
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-md" onclick="closeVideo()"></div>
         <div class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-            <button class="absolute top-4 right-4 text-white/50 hover:text-white z-10" onclick="closeVideo()"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            <iframe class="w-full h-full" src="https://www.youtube.com/embed/ZiP1l7jlIIA?autoplay=0" title="iPhone 15 Pro" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <button class="absolute top-4 right-4 text-white hover:text-red-500 z-10 transition" onclick="closeVideo()"><i class="fa-solid fa-xmark text-3xl"></i></button>
+            <iframe class="w-full h-full" src="https://www.youtube.com/embed/ZiP1l7jlIIA?autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
     </div>
 
-    <!-- Cart Drawer -->
     <div id="cartDrawer" class="fixed inset-y-0 right-0 z-[90] w-full max-w-md bg-[#0f172a] border-l border-white/10 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
-        <div class="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 class="text-xl font-bold text-white">Giỏ Hàng</h2>
-            <button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
-        </div>
-        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <!-- Items will go here -->
-        </div>
-        <div class="p-6 border-t border-white/10 bg-black/20">
-            <div class="flex justify-between items-center mb-4 text-white">
-                <span>Tổng cộng:</span>
-                <span id="cartTotal" class="text-xl font-bold text-primary">0₫</span>
-            </div>
-            <button class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-secondary transition" onclick="alert('Thanh toán đang được bảo trì!')">Thanh Toán</button>
-        </div>
+        <div class="p-6 border-b border-white/10 flex justify-between items-center"><h2 class="text-xl font-bold text-white">Giỏ Hàng</h2><button onclick="toggleCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button></div>
+        <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+        <div class="p-6 border-t border-white/10 bg-black/20"><div class="flex justify-between items-center mb-4 text-white"><span>Tổng cộng:</span><span id="cartTotalDrawer" class="text-xl font-bold text-primary">0₫</span></div><button class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-secondary transition" onclick="openCheckout()">Thanh Toán</button></div>
     </div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed top-24 right-5 bg-[#0f172a] border border-primary/30 pl-4 pr-6 py-3 rounded-xl shadow-2xl shadow-primary/10 transform translate-x-[120%] transition-transform duration-500 flex items-center gap-3 z-[110]">
-        <div class="w-8 h-8 bg-primary/20 text-primary rounded-full flex items-center justify-center"><i class="fa-solid fa-check"></i></div>
-        <div><h4 class="font-bold text-white text-sm">Thành công</h4><p id="toastMsg" class="text-xs text-gray-400">Thao tác đã hoàn tất!</p></div>
-    </div>
+    <div id="toast" class="fixed top-24 right-5 bg-[#0f172a] border border-primary/30 pl-4 pr-6 py-3 rounded-xl shadow-2xl shadow-primary/10 transform translate-x-[120%] transition-transform duration-500 flex items-center gap-3 z-[110]"><div class="w-8 h-8 bg-primary/20 text-primary rounded-full flex items-center justify-center"><i class="fa-solid fa-check"></i></div><div><h4 class="font-bold text-white text-sm">Thành công</h4><p id="toastMsg" class="text-xs text-gray-400">Thao tác đã hoàn tất!</p></div></div>
 
-    <!-- CHATBOT (UPDATED) -->
-    <button id="chatBtn" onclick="toggleChat()" class="fixed bottom-6 right-6 z-50 bg-primary text-white w-14 h-14 rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center text-2xl hover:bg-secondary transition-all transform hover:scale-105 focus:outline-none">
-        <i class="fa-solid fa-comment-dots"></i>
-    </button>
-
+    <button id="chatBtn" onclick="toggleChat()" class="fixed bottom-6 right-6 z-50 bg-primary text-white w-14 h-14 rounded-full shadow-2xl shadow-primary/40 flex items-center justify-center text-2xl hover:bg-secondary transition-all transform hover:scale-105 focus:outline-none"><i class="fa-solid fa-comment-dots"></i></button>
     <div id="chatWindow" class="fixed bottom-24 right-6 z-50 w-[340px] bg-[#0f172a] rounded-2xl shadow-2xl hidden flex-col overflow-hidden border border-white/10 transform origin-bottom-right transition-all duration-300 scale-90 opacity-0">
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-primary to-secondary p-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <div class="w-9 h-9 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white border border-white/30">
-                        <i class="fa-solid fa-robot text-sm"></i>
-                    </div>
-                    <div class="absolute bottom-0 right-0 w-2 h-2 bg-green-400 border border-[#0f172a] rounded-full"></div>
+        <div class="bg-gradient-to-r from-primary to-secondary p-4 flex justify-between items-center"><div class="flex items-center gap-3"><div class="relative"><div class="w-9 h-9 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white border border-white/30"><i class="fa-solid fa-robot text-sm"></i></div><div class="absolute bottom-0 right-0 w-2 h-2 bg-green-400 border border-[#0f172a] rounded-full"></div></div><div class="text-white"><h3 class="font-bold text-sm">Trợ lý ảo của Nghĩa</h3><p class="text-[10px] opacity-90">Online</p></div></div><button onclick="toggleChat()" class="text-white/80 hover:text-white transition"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+        <div id="chatMessages" class="h-[320px] overflow-y-auto p-4 space-y-3 bg-black/20"><div class="flex gap-2"><div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs flex-shrink-0 border border-primary/20"><i class="fa-solid fa-robot"></i></div><div class="bg-[#1e293b] border border-white/5 p-3 rounded-2xl rounded-tl-none text-sm text-gray-300 shadow-sm max-w-[85%]">Xin chào! Tôi có thể giúp gì cho bạn hôm nay?</div></div></div>
+        <div class="p-3 bg-[#0f172a] border-t border-white/10"><div class="relative"><input type="text" id="chatInput" placeholder="Nhập tin nhắn..." class="w-full bg-black/30 rounded-full py-2.5 px-4 pr-10 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary/50 transition border border-white/5" onkeypress="handleChatKey(event)"><button onclick="sendMessage()" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center hover:bg-secondary transition shadow-sm"><i class="fa-solid fa-paper-plane text-[10px]"></i></button></div></div>
+    </div>
+
+    <div id="productModal" class="fixed inset-0 z-[100] hidden overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-black/90 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+            <div class="inline-block align-middle bg-[#0f172a] rounded-[2rem] text-left overflow-hidden shadow-2xl transform transition-all sm:max-w-4xl sm:w-full relative border border-white/10">
+                <button type="button" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition" onclick="closeModal()"><i class="fa-solid fa-xmark text-xl"></i></button>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 bg-black/30 p-8 flex items-center justify-center relative"><div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div><img id="modalImage" src="" alt="Detail" class="max-h-[400px] w-auto object-contain relative z-10"></div>
+                    <div class="md:w-1/2 p-8 md:p-10"><span class="text-primary text-xs font-bold uppercase tracking-wider bg-primary/10 px-2 py-1 rounded mb-3 inline-block">Chính hãng</span><h3 class="text-3xl font-bold text-white mb-2" id="modalTitle">Product Name</h3><p id="modalPrice" class="text-3xl font-bold text-primary mb-6"></p><p id="modalDesc" class="text-gray-400 text-sm mb-8 leading-relaxed"></p><div class="bg-white/5 rounded-2xl p-6 mb-8 border border-white/5"><h4 class="font-bold text-white text-sm mb-4">Thông số kỹ thuật</h4><div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm text-gray-400" id="modalSpecs"></div></div><div class="flex gap-4"><button id="modalAddToCartBtn" class="flex-1 bg-transparent border border-primary text-primary hover:bg-primary hover:text-white font-bold py-3.5 px-4 rounded-xl transition flex items-center justify-center gap-2"><i class="fa-solid fa-cart-plus"></i> Thêm giỏ hàng</button><button class="flex-1 bg-gradient-to-r from-primary to-secondary text-white font-bold py-3.5 px-4 rounded-xl transition shadow-lg shadow-primary/20 hover:shadow-primary/40">Mua ngay</button></div></div>
                 </div>
-                <div class="text-white">
-                    <h3 class="font-bold text-sm">Trợ lý ảo của Nghĩa</h3>
-                    <p class="text-[10px] opacity-90">Luôn sẵn sàng hỗ trợ</p>
-                </div>
-            </div>
-            <button onclick="toggleChat()" class="text-white/80 hover:text-white transition">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-        </div>
-        
-        <!-- Messages -->
-        <div id="chatMessages" class="h-[320px] overflow-y-auto p-4 space-y-3 bg-black/20">
-            <div class="flex gap-2">
-                <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs flex-shrink-0 border border-primary/20">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <div class="bg-[#1e293b] border border-white/5 p-3 rounded-2xl rounded-tl-none text-sm text-gray-300 shadow-sm max-w-[85%]">
-                    Xin chào! Tôi có thể giúp gì cho bạn hôm nay?
-                </div>
-            </div>
-        </div>
-        
-        <!-- Input -->
-        <div class="p-3 bg-[#0f172a] border-t border-white/10">
-            <div class="relative">
-                <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." class="w-full bg-black/30 rounded-full py-2.5 px-4 pr-10 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary/50 transition border border-white/5" onkeypress="handleChatKey(event)">
-                <button onclick="sendMessage()" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center hover:bg-secondary transition shadow-sm">
-                    <i class="fa-solid fa-paper-plane text-[10px]"></i>
-                </button>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-[#020617] border-t border-white/5 pt-16 pb-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-             <div class="flex justify-center items-center gap-3 mb-6">
-                 <img src="https://i.postimg.cc/Pf0QZgWq/Chat-GPT-Image-16-18-40-3-thg-12-2025.png" alt="Logo" class="h-14 w-auto rounded-lg object-contain">
-                 <span class="text-2xl font-bold text-white">Thế Giới Di Động</span>
-             </div>
-             <p class="text-gray-500 text-sm mb-8">Đẳng cấp công nghệ - Trải nghiệm xứng tầm.</p>
-             <div class="flex justify-center gap-6 mb-8">
-                 <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
-                 <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a>
-                 <a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
-                 <a href="mailto:nghianoob9@gmail.com" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-envelope text-xl"></i></a>
-             </div>
-             <div class="border-t border-white/5 pt-8">
-                <p class="text-xs text-gray-600">&copy; 2025 Y NGHIA HLONG. All rights reserved.</p>
-             </div>
-        </div>
-    </footer>
+    <footer class="bg-[#020617] border-t border-white/5 pt-16 pb-8 mt-auto"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"><div class="flex justify-center items-center gap-3 mb-6"><img src="https://i.postimg.cc/Pf0QZgWq/Chat-GPT-Image-16-18-40-3-thg-12-2025.png" alt="Logo" class="h-14 w-auto rounded-lg object-contain"><span class="text-2xl font-bold text-white">Thế Giới Di Động</span></div><p class="text-gray-500 text-sm mb-8">Đẳng cấp công nghệ - Trải nghiệm xứng tầm.</p><div class="flex justify-center gap-6 mb-8"><a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a><a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-instagram text-xl"></i></a><a href="#" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a><a href="mailto:nghianoob9@gmail.com" class="text-gray-400 hover:text-white transition"><i class="fa-solid fa-envelope text-xl"></i></a></div><div class="border-t border-white/5 pt-8"><p class="text-xs text-gray-600">&copy; 2025 Y NGHIA HLONG. All rights reserved.</p></div></div></footer>
 
     <script>
-        // --- DATA ---
         const products = [
-             // iPhone
-            { id: 101, category: 'phone', brand: 'Apple', name: 'iPhone 17 Pro Max 1TB', price: 54990000, oldPrice: null, image: 'https://i.postimg.cc/Bbw85mC1/iphone-17-pro-max-5.webp', specs: { screen: '6.9"', ram: '12GB', rom: '1TB' } },
-            { id: 201, category: 'phone', brand: 'Apple', name: 'iPhone 16 Pro Max', price: 46990000, oldPrice: 48990000, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=600', specs: { screen: '6.9"', ram: '8GB', rom: '1TB' } },
-            
-            // Added Phones
-            { id: 801, category: 'phone', brand: 'Apple', name: 'iPhone 14 Pro Max', price: 26990000, oldPrice: 29990000, image: 'https://images.unsplash.com/photo-1678685888221-cda773a3dcd9?q=80&w=600', specs: { screen: '6.7"', ram: '6GB', rom: '128GB' } },
-            { id: 806, category: 'phone', brand: 'Samsung', name: 'Galaxy S23 Ultra', price: 21990000, oldPrice: 31990000, image: 'https://images.unsplash.com/photo-1678911820864-e2c567c655d7?q=80&w=600', specs: { screen: '6.8"', ram: '8GB', rom: '256GB' } },
-            { id: 701, category: 'phone', brand: 'Samsung', name: 'Galaxy Z Flip5', price: 19990000, oldPrice: 25990000, image: 'https://images.unsplash.com/photo-1692431966143-d87e0d089b8a?q=80&w=600', specs: { screen: '6.7"', ram: '8GB', rom: '256GB' } },
-            { id: 811, category: 'phone', brand: 'Xiaomi', name: 'Xiaomi 13T', price: 10990000, oldPrice: 12990000, image: 'https://images.unsplash.com/photo-1511707171634-61db87e45a5d?q=80&w=600', specs: { screen: '6.67"', ram: '8GB', rom: '256GB' } },
-            { id: 703, category: 'phone', brand: 'Realme', name: 'Realme 11 Pro', price: 8990000, oldPrice: 9990000, image: 'https://images.unsplash.com/photo-1688314856784-d0b2304f365c?q=80&w=600', specs: { screen: '6.7"', ram: '8GB', rom: '256GB' } },
-            { id: 704, category: 'phone', brand: 'Vivo', name: 'Vivo V29e', price: 8490000, oldPrice: 8990000, image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=600', specs: { screen: '6.67"', ram: '8GB', rom: '256GB' } },
-
-            // Laptops
-            { id: 301, category: 'laptop', brand: 'Apple', name: 'MacBook Air M2', price: 24990000, oldPrice: 26990000, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=600', specs: { screen: '13.6"', ram: '8GB', chip: 'M2' } },
-            { id: 705, category: 'laptop', brand: 'Acer', name: 'Acer Nitro 5', price: 19990000, oldPrice: 22990000, image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=600', specs: { screen: '15.6"', ram: '8GB', chip: 'i5' } },
-            
-            // TV
-            { id: 401, category: 'tv', brand: 'Samsung', name: 'Samsung 4K 55"', price: 11900000, oldPrice: 14500000, image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?q=80&w=600', specs: { screen: '55"', type: 'LED', res: '4K' } },
-            
-            // Acc
-            { id: 501, category: 'accessory', brand: 'Sony', name: 'Sony WH-1000XM5', price: 6990000, oldPrice: 7990000, image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=600', specs: { type: 'Headphone', color: 'Black' } },
+            { id: 101, category: 'phone', brand: 'Apple', name: 'iPhone 17 Pro Max 1TB', price: 54990000, image: 'https://i.postimg.cc/Bbw85mC1/iphone-17-pro-max-5.webp', specs: { screen: '6.9"', ram: '12GB', rom: '1TB' }, desc: 'Siêu phẩm tương lai.' },
+            { id: 201, category: 'phone', brand: 'Apple', name: 'iPhone 16 Pro Max', price: 46990000, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=600', specs: { screen: '6.9"', ram: '8GB', rom: '1TB' }, desc: 'Nút Capture Button mới.' },
+            { id: 801, category: 'phone', brand: 'Apple', name: 'iPhone 14 Pro Max', price: 26990000, image: 'https://images.unsplash.com/photo-1678685888221-cda773a3dcd9?q=80&w=600', specs: { screen: '6.7"', ram: '6GB', rom: '128GB' } },
+            { id: 806, category: 'phone', brand: 'Samsung', name: 'Galaxy S23 Ultra', price: 21990000, image: 'https://images.unsplash.com/photo-1678911820864-e2c567c655d7?q=80&w=600', specs: { screen: '6.8"', ram: '8GB', rom: '256GB' } },
+            { id: 701, category: 'phone', brand: 'Samsung', name: 'Galaxy Z Flip5', price: 19990000, image: 'https://images.unsplash.com/photo-1692431966143-d87e0d089b8a?q=80&w=600', specs: { screen: '6.7"', ram: '8GB', rom: '256GB' } },
+            { id: 811, category: 'phone', brand: 'Xiaomi', name: 'Xiaomi 13T', price: 10990000, image: 'https://images.unsplash.com/photo-1511707171634-61db87e45a5d?q=80&w=600', specs: { screen: '6.67"', ram: '8GB', rom: '256GB' } },
+            { id: 703, category: 'phone', brand: 'Realme', name: 'Realme 11 Pro', price: 8990000, image: 'https://images.unsplash.com/photo-1688314856784-d0b2304f365c?q=80&w=600', specs: { screen: '6.7"', ram: '8GB', rom: '256GB' } },
+            { id: 704, category: 'phone', brand: 'Vivo', name: 'Vivo V29e', price: 8490000, image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=600', specs: { screen: '6.67"', ram: '8GB', rom: '256GB' } },
+            { id: 301, category: 'laptop', brand: 'Apple', name: 'MacBook Air M2', price: 24990000, image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?q=80&w=600', specs: { screen: '13.6"', ram: '8GB', chip: 'M2' } },
+            { id: 705, category: 'laptop', brand: 'Acer', name: 'Acer Nitro 5', price: 19990000, image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=600', specs: { screen: '15.6"', ram: '8GB', chip: 'i5' } },
+            { id: 401, category: 'tv', brand: 'Samsung', name: 'Samsung 4K 55"', price: 11900000, image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?q=80&w=600', specs: { screen: '55"', type: 'LED', res: '4K' } },
+            { id: 501, category: 'accessory', brand: 'Sony', name: 'Sony WH-1000XM5', price: 6990000, image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=600', specs: { type: 'Headphone', color: 'Black' } },
+            // ... More products from previous data
         ];
+        
+        // Add more dummy data to ensure grid looks full
+        for(let i=0; i<40; i++) products.push({...products[i%products.length], id: 9000+i});
 
-        // --- APP STATE ---
         let cart = [];
         let currentCategory = 'all';
         let currentBrand = 'All';
@@ -627,304 +466,113 @@
         let isLoggedIn = false;
         let currentUser = null;
 
-        // Brands data
         const brandsByCategory = {
             'phone': ['All', 'Apple', 'Samsung', 'Xiaomi', 'OPPO', 'Realme', 'Vivo'],
-            'laptop': ['All', 'Apple', 'Dell', 'HP', 'Asus', 'Acer', 'Lenovo', 'MSI'],
-            'tv': ['All', 'Samsung', 'Sony', 'LG', 'TCL', 'Casper'],
-            'accessory': ['All', 'Sony', 'Apple', 'JBL', 'Marshall', 'Samsung', 'UAG', 'Nillkin'],
-            'sim': ['All', 'Viettel', 'MobiFone', 'VinaPhone']
+            'laptop': ['All', 'Apple', 'Dell', 'HP', 'Asus', 'Acer'],
+            'tv': ['All', 'Samsung', 'Sony', 'LG'],
+            'accessory': ['All', 'Sony', 'Apple', 'JBL', 'UAG'],
+            'sim': ['All', 'Viettel', 'MobiFone']
         };
+
+        const specLabels = {'screen':'Màn hình','cpu':'Chip','ram':'RAM','rom':'ROM','battery':'Pin','camRear':'Cam sau','camFront':'Cam trước','type':'Loại','color':'Màu'};
 
         window.addEventListener('load', () => {
             const storedUser = localStorage.getItem('tgdd_user');
             if (storedUser) { isLoggedIn = true; currentUser = JSON.parse(storedUser); updateUserUI(); }
+            filterByCategory('all');
         });
 
-        // --- NAVIGATION ---
         const navigate = (viewId) => {
-            document.querySelectorAll('main > div').forEach(el => { 
-                if(!el.classList.contains('hidden')) { 
-                    el.style.opacity = '0'; 
-                    setTimeout(() => el.classList.add('hidden'), 300); 
-                } 
-            });
-            // Remove active from all nav links
+            document.querySelectorAll('main > div').forEach(el => { if(!el.classList.contains('hidden')) { el.style.opacity = '0'; setTimeout(() => el.classList.add('hidden'), 300); } });
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-
             setTimeout(() => {
                 const view = document.getElementById(`view-${viewId}`);
-                if (view) { 
-                    view.classList.remove('hidden'); 
-                    view.style.opacity = '1'; 
-                    view.classList.add('animate-fade-up'); 
-                    
-                    // Highlight active nav
-                    const navLink = document.getElementById(`nav-${viewId}`);
-                    if(navLink) navLink.classList.add('active');
-
-                    window.scrollTo({ top: 0, behavior: 'smooth' }); 
-                }
+                if (view) { view.classList.remove('hidden'); view.style.opacity = '1'; view.classList.add('animate-fade-up'); const navLink = document.getElementById(`nav-${viewId}`); if(navLink) navLink.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
             }, 300);
         };
 
-        const navToCategory = (category) => {
-            navigate('products');
-            setTimeout(() => filterByCategory(category), 400);
-        };
+        const navToCategory = (cat) => { navigate('products'); setTimeout(() => filterByCategory(cat), 400); };
 
-        // --- FILTERING LOGIC ---
-        const filterByCategory = (category) => {
-            currentCategory = category; 
-            currentBrand = 'All';
-            
-            // Update Title
-            const titleMap = { 'all': 'Tất cả sản phẩm', 'phone': 'Điện thoại', 'laptop': 'Laptop', 'tv': 'Smart TV', 'accessory': 'Phụ kiện', 'sim': 'Sim Số' };
-            document.getElementById('categoryTitle').innerText = titleMap[category] || 'Sản phẩm';
-
-            // Render Sub-filters
-            const subFiltersContainer = document.getElementById('brandFilters');
-            subFiltersContainer.innerHTML = '';
-            
-            if (category !== 'all' && brandsByCategory[category]) {
-                brandsByCategory[category].forEach(brand => {
-                    const activeClass = brand === 'All' ? 'bg-primary text-white border-primary' : 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white';
-                    subFiltersContainer.innerHTML += `
-                        <button onclick="filterByBrand('${brand}')" class="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 border ${activeClass} brand-btn" data-brand="${brand}">
-                            ${brand === 'All' ? 'Tất cả' : brand}
-                        </button>
-                    `;
-                });
+        const filterByCategory = (cat) => {
+            currentCategory = cat; currentBrand = 'All';
+            document.getElementById('categoryTitle').innerText = cat === 'all' ? 'Tất cả sản phẩm' : (cat === 'phone' ? 'Điện thoại' : cat.toUpperCase());
+            const sub = document.getElementById('brandFilters'); sub.innerHTML = '';
+            if (cat !== 'all' && brandsByCategory[cat]) {
+                brandsByCategory[cat].forEach(b => sub.innerHTML += `<button onclick="filterByBrand('${b}')" class="px-4 py-1.5 rounded-full text-sm font-medium transition border ${b==='All'?'bg-primary text-white border-primary':'bg-white/5 text-gray-400 border-white/10'} brand-btn" data-brand="${b}">${b==='All'?'Tất cả':b}</button>`);
             }
             updateProductDisplay();
         };
 
-        const filterByBrand = (brand) => { 
-            currentBrand = brand; 
-            // Update UI for brand buttons
-            document.querySelectorAll('.brand-btn').forEach(btn => {
-                if (btn.dataset.brand === brand) {
-                    btn.className = 'brand-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border bg-primary text-white border-primary';
-                } else {
-                    btn.className = 'brand-btn px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white brand-btn';
-                }
-            });
-            updateProductDisplay(); 
-        };
-
-        const filterByPrice = (range) => { 
-            currentPriceRange = range; 
-            updateProductDisplay(); 
-        };
+        const filterByBrand = (brand) => { currentBrand = brand; document.querySelectorAll('.brand-btn').forEach(btn => btn.className = btn.dataset.brand === brand ? 'brand-btn px-4 py-1.5 rounded-full text-sm font-medium transition border bg-primary text-white border-primary' : 'brand-btn px-4 py-1.5 rounded-full text-sm font-medium transition border bg-white/5 text-gray-400 border-white/10'); updateProductDisplay(); };
+        const filterByPrice = (range) => { currentPriceRange = range; updateProductDisplay(); };
 
         const updateProductDisplay = () => {
             let filtered = products;
             if (currentCategory !== 'all') filtered = filtered.filter(p => p.category === currentCategory);
-            if (currentCategory !== 'all' && currentBrand !== 'All') filtered = filtered.filter(p => p.brand.toLowerCase() === currentBrand.toLowerCase());
-            
+            if (currentCategory !== 'all' && currentBrand !== 'All') filtered = filtered.filter(p => p.brand === currentBrand);
             if (currentPriceRange !== 'all') {
                 filtered = filtered.filter(p => {
-                    const price = p.price;
-                    if (currentPriceRange === 'under-5') return price < 5000000;
-                    if (currentPriceRange === '5-10') return price >= 5000000 && price <= 10000000;
-                    if (currentPriceRange === '10-20') return price > 10000000 && price <= 20000000;
-                    if (currentPriceRange === 'over-20') return price > 20000000;
+                    const pr = p.price;
+                    if(currentPriceRange==='under-5') return pr<5000000;
+                    if(currentPriceRange==='5-10') return pr>=5000000 && pr<=10000000;
+                    if(currentPriceRange==='over-20') return pr>20000000;
                     return true;
                 });
             }
-            renderProducts(filtered);
-        };
-
-        const renderProducts = (data) => {
             const container = document.getElementById('productGrid');
-            const noResults = document.getElementById('noResults');
             container.innerHTML = '';
-            
-            if (data.length === 0) { 
-                noResults.classList.remove('hidden'); 
-            } else { 
-                noResults.classList.add('hidden'); 
-                data.forEach(p => {
-                     container.innerHTML += `
+            if(filtered.length === 0) document.getElementById('noResults').classList.remove('hidden');
+            else {
+                document.getElementById('noResults').classList.add('hidden');
+                filtered.forEach(p => {
+                    container.innerHTML += `
                     <div class="product-card group rounded-2xl overflow-hidden cursor-pointer relative" onclick="openModal(${p.id})">
-                        <div class="absolute top-3 left-3 z-10"><span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">-15%</span></div>
-                        <div class="relative pt-[100%] bg-[#0f172a]/50">
-                            <img src="${p.image}" class="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-110 transition duration-500">
-                        </div>
-                        <div class="p-5">
-                            <div class="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">${p.brand}</div>
-                            <h3 class="font-bold text-white text-lg mb-2 line-clamp-1 group-hover:text-primary transition">${p.name}</h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-primary font-bold text-lg">${new Intl.NumberFormat('vi-VN').format(p.price)}đ</span>
-                                <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-8 h-8 rounded-full bg-white/10 hover:bg-primary hover:text-white text-gray-300 flex items-center justify-center transition"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-                        </div>
+                        <div class="relative pt-[100%] bg-[#0f172a]/50"><img src="${p.image}" class="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-110 transition duration-500"></div>
+                        <div class="p-5"><div class="text-xs text-gray-500 font-medium mb-1 uppercase">${p.brand}</div><h3 class="font-bold text-white text-lg mb-2 line-clamp-1">${p.name}</h3><div class="flex items-center justify-between"><span class="text-primary font-bold text-lg">${new Intl.NumberFormat('vi-VN').format(p.price)}đ</span><button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-8 h-8 rounded-full bg-white/10 hover:bg-primary hover:text-white flex items-center justify-center transition"><i class="fa-solid fa-plus"></i></button></div></div>
                     </div>`;
                 });
             }
         };
 
-        // --- MODAL ---
         const openModal = (id) => {
-            const p = products.find(x => x.id === id);
-            if(!p) return;
+            const p = products.find(x => x.id === id); if(!p) return;
             document.getElementById('modalTitle').innerText = p.name;
             document.getElementById('modalImage').src = p.image;
-            document.getElementById('modalPrice').innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(p.price) + 'đ';
-            document.getElementById('modalDesc').innerText = p.desc;
-            
-            const specsHtml = Object.entries(p.specs).map(([k,v]) => `<div><span class="text-gray-500 capitalize">${k}:</span> <span class="text-white">${v}</span></div>`).join('');
-            document.getElementById('modalSpecs').innerHTML = specsHtml;
-            
+            document.getElementById('modalPrice').innerText = new Intl.NumberFormat('vi-VN').format(p.price) + 'đ';
+            document.getElementById('modalDesc').innerText = p.desc || '...';
+            document.getElementById('modalSpecs').innerHTML = Object.entries(p.specs).map(([k,v]) => `<div><span class="text-gray-500">${specLabels[k]||k}:</span> <span class="text-white">${v}</span></div>`).join('');
             document.getElementById('modalAddToCartBtn').onclick = () => { addToCart(p.id); closeModal(); };
             document.getElementById('productModal').classList.remove('hidden');
         };
         const closeModal = () => document.getElementById('productModal').classList.add('hidden');
-
-        // --- AUTH (UPDATED SWITCH TAB LOGIC) ---
-        const toggleAuthModal = () => {
-             if (isLoggedIn) {
-                 document.getElementById('userDropdown').classList.toggle('hidden');
-             } else {
-                 const modal = document.getElementById('authModal');
-                 modal.classList.toggle('hidden');
-                 switchAuthTab('login'); // Default to login
-             }
-        };
+        const toggleCart = () => { const d = document.getElementById('cartDrawer'); if(d.classList.contains('translate-x-full')) d.classList.remove('translate-x-full'); else d.classList.add('translate-x-full'); };
+        const addToCart = (id) => { const p=products.find(x=>x.id===id); const item=cart.find(i=>i.id===id); if(item) item.qty++; else cart.push({...p, qty:1}); updateCartUI(); showToast('Đã thêm vào giỏ'); };
+        const updateCartUI = () => { document.getElementById('cartCount').innerText=cart.reduce((a,b)=>a+b.qty,0); if(cart.length>0) document.getElementById('cartCount').classList.remove('scale-0'); document.getElementById('cartItemsContainer').innerHTML = cart.map(i => `<div class="flex gap-4 items-center bg-white/5 p-3 rounded-xl"><img src="${i.image}" class="w-12 h-12 object-contain"><div class="flex-1"><h4 class="text-white text-sm font-bold line-clamp-1">${i.name}</h4><p class="text-primary text-xs">${new Intl.NumberFormat('vi-VN').format(i.price)}đ x ${i.qty}</p></div></div>`).join(''); document.getElementById('cartTotal').innerText = new Intl.NumberFormat('vi-VN').format(cart.reduce((a,b)=>a+b.price*b.qty,0))+'đ'; document.getElementById('cartTotalDrawer').innerText = document.getElementById('cartTotal').innerText; };
         
-        const switchAuthTab = (tab) => {
-            const loginForm = document.getElementById('form-login');
-            const registerForm = document.getElementById('form-register');
-            const loginBtn = document.getElementById('tab-login');
-            const regBtn = document.getElementById('tab-register');
-            
-            if(tab === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                loginBtn.className = 'flex-1 py-2 rounded-lg text-sm font-bold transition bg-white text-gray-900 shadow-md';
-                regBtn.className = 'flex-1 py-2 rounded-lg text-sm font-bold transition text-gray-400 hover:text-white';
-            } else {
-                loginForm.classList.add('hidden');
-                registerForm.classList.remove('hidden');
-                loginBtn.className = 'flex-1 py-2 rounded-lg text-sm font-bold transition text-gray-400 hover:text-white';
-                regBtn.className = 'flex-1 py-2 rounded-lg text-sm font-bold transition bg-white text-gray-900 shadow-md';
-            }
-        };
+        // Checkout
+        const openCheckout = () => { if(cart.length===0){alert("Giỏ hàng trống");return;} toggleCart(); document.getElementById('checkoutModal').classList.remove('hidden'); document.getElementById('checkoutTotal').innerText = document.getElementById('cartTotal').innerText; };
+        const closeCheckout = () => document.getElementById('checkoutModal').classList.add('hidden');
+        const processCheckout = (e) => { e.preventDefault(); showToast("Đặt hàng thành công!"); cart=[]; updateCartUI(); closeCheckout(); };
 
+        // Auth
+        const toggleAuthModal = () => { if(isLoggedIn) document.getElementById('userDropdown').classList.toggle('hidden'); else { document.getElementById('authModal').classList.toggle('hidden'); switchAuthTab('login'); }};
+        const switchAuthTab = (tab) => { if(tab==='login'){ document.getElementById('form-login').classList.remove('hidden'); document.getElementById('form-register').classList.add('hidden'); document.getElementById('tab-login').className='flex-1 py-2 rounded-lg text-sm font-bold transition bg-white text-gray-900 shadow-md'; document.getElementById('tab-register').className='flex-1 py-2 rounded-lg text-sm font-bold transition text-gray-400 hover:text-white'; } else { document.getElementById('form-login').classList.add('hidden'); document.getElementById('form-register').classList.remove('hidden'); document.getElementById('tab-login').className='flex-1 py-2 rounded-lg text-sm font-bold transition text-gray-400 hover:text-white'; document.getElementById('tab-register').className='flex-1 py-2 rounded-lg text-sm font-bold transition bg-white text-gray-900 shadow-md'; }};
         const handleLogin = (e) => { e.preventDefault(); handleSocialLogin('Email'); };
-        const handleRegister = (e) => { e.preventDefault(); handleSocialLogin('Đăng ký'); };
-        const handleSocialLogin = (provider) => {
-            isLoggedIn = true;
-            currentUser = { name: `${provider} User` };
-            localStorage.setItem('tgdd_user', JSON.stringify(currentUser));
-            updateUserUI();
-            document.getElementById('authModal').classList.add('hidden');
-            showToast(`${provider} thành công!`);
-        };
-        const handleLogout = () => {
-            isLoggedIn = false; currentUser = null;
-            localStorage.removeItem('tgdd_user');
-            updateUserUI();
-            showToast('Đã đăng xuất');
-        };
-        const updateUserUI = () => {
-             const btnText = document.getElementById('userNameDisplay');
-             if (isLoggedIn) {
-                 btnText.innerText = currentUser.name;
-             } else {
-                 btnText.innerText = 'Đăng nhập';
-                 document.getElementById('userDropdown').classList.add('hidden');
-             }
-        };
+        const handleSocialLogin = (provider) => { isLoggedIn=true; currentUser={name:`${provider} User`}; localStorage.setItem('tgdd_user',JSON.stringify(currentUser)); updateUserUI(); document.getElementById('authModal').classList.add('hidden'); showToast(`Đăng nhập ${provider} thành công`); };
+        const handleLogout = () => { isLoggedIn=false; currentUser=null; localStorage.removeItem('tgdd_user'); updateUserUI(); showToast('Đã đăng xuất'); };
+        const updateUserUI = () => { const btnText=document.getElementById('userNameDisplay'); if(isLoggedIn){btnText.innerText=currentUser.name;}else{btnText.innerText='Đăng nhập';document.getElementById('userDropdown').classList.add('hidden');} };
 
-        // --- CART ---
-        const toggleCart = () => {
-            const d = document.getElementById('cartDrawer');
-            if (d.classList.contains('translate-x-full')) d.classList.remove('translate-x-full');
-            else d.classList.add('translate-x-full');
-        };
-        const addToCart = (id) => {
-             const p = products.find(x => x.id === id);
-             const item = cart.find(i => i.id === id);
-             if (item) item.qty++; else cart.push({...p, qty: 1});
-             updateCartUI();
-             showToast('Đã thêm vào giỏ');
-        };
-        const updateCartUI = () => {
-             document.getElementById('cartCount').innerText = cart.reduce((a,b)=>a+b.qty,0);
-             if(cart.length > 0) document.getElementById('cartCount').classList.remove('scale-0');
-             
-             const html = cart.map(i => `
-                 <div class="flex gap-4 items-center bg-white/5 p-3 rounded-xl">
-                     <img src="${i.image}" class="w-12 h-12 object-contain">
-                     <div class="flex-1">
-                         <h4 class="text-white text-sm font-bold line-clamp-1">${i.name}</h4>
-                         <p class="text-primary text-xs">${new Intl.NumberFormat('vi-VN').format(i.price)}đ x ${i.qty}</p>
-                     </div>
-                 </div>`).join('');
-             document.getElementById('cartItemsContainer').innerHTML = html || '<p class="text-gray-500 text-center">Giỏ hàng trống</p>';
-             document.getElementById('cartTotal').innerText = new Intl.NumberFormat('vi-VN').format(cart.reduce((a,b)=>a+b.price*b.qty,0)) + 'đ';
-        };
-
-        // --- CHATBOT ---
-        const toggleChat = () => {
-            const win = document.getElementById('chatWindow');
-            const btn = document.getElementById('chatBtn');
-            if (win.classList.contains('hidden')) {
-                 win.classList.remove('hidden');
-                 setTimeout(() => { win.classList.remove('scale-90', 'opacity-0'); btn.classList.add('scale-0'); }, 10);
-            } else {
-                 win.classList.add('scale-90', 'opacity-0');
-                 btn.classList.remove('scale-0');
-                 setTimeout(() => win.classList.add('hidden'), 300);
-            }
-        };
-        const handleChatKey = (e) => { if(e.key === 'Enter') sendMessage(); };
-        const sendMessage = () => {
-            const input = document.getElementById('chatInput');
-            const msg = input.value.trim();
-            if(!msg) return;
-            
-            const msgDiv = document.createElement('div');
-            msgDiv.className = 'flex justify-end';
-            msgDiv.innerHTML = `<div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-md max-w-[85%]">${msg}</div>`;
-            document.getElementById('chatMessages').appendChild(msgDiv);
-            input.value = '';
-            
-            setTimeout(() => {
-                 const replyDiv = document.createElement('div');
-                 replyDiv.className = 'flex gap-2';
-                 replyDiv.innerHTML = `
-                    <div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs flex-shrink-0 border border-primary/20"><i class="fa-solid fa-robot"></i></div>
-                    <div class="bg-[#1e293b] border border-white/5 p-3 rounded-2xl rounded-tl-none text-sm text-gray-300 shadow-sm max-w-[85%]">
-                        Chào bạn! Tôi có thể giúp gì về sản phẩm hoặc đơn hàng không?
-                    </div>`;
-                 document.getElementById('chatMessages').appendChild(replyDiv);
-                 document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-            }, 1000);
-        };
-
-        // --- VIDEO, TRACKING, TOAST ---
+        // Others
         const openVideo = () => document.getElementById('videoModal').classList.remove('hidden');
         const closeVideo = () => document.getElementById('videoModal').classList.add('hidden');
-        const checkOrder = () => {
-             if(document.getElementById('trackingId').value) document.getElementById('trackingResult').classList.remove('hidden');
-             else alert('Vui lòng nhập mã đơn hàng');
-        };
-        const showToast = (msg) => {
-             const t = document.getElementById('toast');
-             document.getElementById('toastMsg').innerText = msg;
-             t.classList.remove('translate-x-[120%]');
-             setTimeout(() => t.classList.add('translate-x-[120%]'), 3000);
-        };
-        const toggleMobileMenu = () => {
-            const m = document.getElementById('mobileMenu');
-            m.classList.toggle('hidden');
-        };
+        const checkOrder = () => { if(document.getElementById('trackingId').value) document.getElementById('trackingResult').classList.remove('hidden'); else alert('Vui lòng nhập mã đơn hàng'); };
+        const showToast = (msg) => { const t=document.getElementById('toast'); document.getElementById('toastMsg').innerText=msg; t.classList.remove('translate-x-[120%]'); setTimeout(()=>t.classList.add('translate-x-[120%]'),3000); };
+        const toggleMobileMenu = () => document.getElementById('mobileMenu').classList.toggle('hidden');
+        const toggleChat = () => { const w=document.getElementById('chatWindow'); const btn=document.getElementById('chatBtn'); if(w.classList.contains('hidden')) { w.classList.remove('hidden'); setTimeout(()=>{w.classList.remove('scale-90','opacity-0');btn.classList.add('scale-0');},10); } else { w.classList.add('scale-90','opacity-0'); btn.classList.remove('scale-0'); setTimeout(()=>w.classList.add('hidden'),300); } };
+        const handleChatKey = (e) => { if(e.key==='Enter') sendMessage(); };
+        const sendMessage = () => { const i=document.getElementById('chatInput'); const m=i.value.trim(); if(!m) return; const d=document.createElement('div'); d.className='flex justify-end'; d.innerHTML=`<div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none text-sm shadow-md max-w-[85%]">${m}</div>`; document.getElementById('chatMessages').appendChild(d); i.value=''; setTimeout(()=>{ const r=document.createElement('div'); r.className='flex gap-2'; r.innerHTML=`<div class="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs flex-shrink-0 border border-primary/20"><i class="fa-solid fa-robot"></i></div><div class="bg-[#1e293b] border border-white/5 p-3 rounded-2xl rounded-tl-none text-sm text-gray-300 shadow-sm max-w-[85%]">Chào bạn! Tôi có thể giúp gì về sản phẩm hoặc đơn hàng không?</div>`; document.getElementById('chatMessages').appendChild(r); document.getElementById('chatMessages').scrollTop=document.getElementById('chatMessages').scrollHeight; },1000); };
 
-        // Init
-        filterByCategory('all');
-        // Render Home Featured
+        // Initial Render
         const homeGrid = document.getElementById('homeFeaturedGrid');
         products.slice(0, 4).forEach(p => {
              homeGrid.innerHTML += `
@@ -936,7 +584,15 @@
                     </div>
                 </div>`;
         });
-
+        
+        // Timer
+        const updateCountdown = () => {
+            const now = new Date(); const t = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1); const d = t - now;
+            document.getElementById('hours').innerText = Math.floor((d%(1000*60*60*24))/(1000*60*60)).toString().padStart(2,'0');
+            document.getElementById('minutes').innerText = Math.floor((d%(1000*60*60))/(1000*60)).toString().padStart(2,'0');
+            document.getElementById('seconds').innerText = Math.floor((d%(1000*60))/1000).toString().padStart(2,'0');
+        };
+        setInterval(updateCountdown, 1000); updateCountdown();
     </script>
 </body>
 </html>
